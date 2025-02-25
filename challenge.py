@@ -1,25 +1,24 @@
 def es_primo(num):
     if num < 2:
         return False
-    for i in range(2, int(num ** 0.5) + 1):
+    if num == 2:
+        return True
+    if num % 2 == 0:
+        return False
+    for i in range(3, int(num ** 0.5) + 1, 2):  # Solo comprobar impares
         if num % i == 0:
             return False
     return True
 
-# Guardar los números primos entre 1 y 250 en una lista
-primos = []
-for i in range(1, 251):
-    if es_primo(i):
-        primos.append(i)
+# Obtener números primos entre 1 y 250 con list comprehension
+primos = [i for i in range(1, 251) if es_primo(i)]
 
-# Escribir los resultados en el archivo results.txt
+# Escribir los resultados en 'results.txt' de manera eficiente
 with open('results.txt', 'w') as archivo:
-    for primo in primos:
-        archivo.write(f"{primo}\n")
+    archivo.writelines(f"{primo}\n" for primo in primos)
 
-# Imprimir los números primos por consola para verificar
+# Imprimir los números primos en consola
 print("Números primos entre 1 y 250:")
-for primo in primos:
-    print(primo)
+print(", ".join(map(str, primos)))
 
 print("Los números primos han sido guardados en 'results.txt'.")
